@@ -13,15 +13,14 @@ const Carousel: React.FC = () => {
   const [images, setImages] = useState<ImageSource[]>([]);
 
   useEffect(() => {
-    // Conecta ao serviço MQTT se ainda não estiver conectado
     mockMqttService.connect();
 
-    // Inscreve-se para receber atualizações de imagens
+    
     mockMqttService.subscribeToImages((message) => {
       setImages(message.images);
     });
 
-    // Timer para rotação automática das imagens
+    
     const timer = setInterval(() => {
       setCurrentIndex((prevIndex) => 
         prevIndex === images.length - 1 ? 0 : prevIndex + 1
@@ -31,7 +30,7 @@ const Carousel: React.FC = () => {
     return () => clearInterval(timer);
   }, []);
 
-  // Atualiza o índice quando o número de imagens mudar
+  
   useEffect(() => {
     if (currentIndex >= images.length) {
       setCurrentIndex(0);
@@ -43,7 +42,7 @@ const Carousel: React.FC = () => {
   };
 
   if (images.length === 0) {
-    return null; // ou um componente de loading
+    return null; 
   }
 
   return (
